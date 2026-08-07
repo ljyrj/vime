@@ -36,7 +36,7 @@ def update_tracking_open_metrics(args, router_addr):
 
 
 def finish_tracking(args):
-    if not args.use_wandb:
+    if not wandb_utils.should_init_wandb(args):
         return
     try:
         if wandb.run is not None:
@@ -47,7 +47,7 @@ def finish_tracking(args):
 
 # TODO further refactor, e.g. put TensorBoard init to the "init" part
 def log(args, metrics, step_key: str):
-    if args.use_wandb:
+    if wandb_utils.should_init_wandb(args):
         wandb.log(metrics)
 
     if args.use_tensorboard:
